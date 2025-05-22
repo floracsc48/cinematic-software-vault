@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { SoftwareItem } from './SoftwareCard';
 import { cn } from '@/lib/utils';
@@ -100,12 +99,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50 relative">
-              <img 
-                src={software.icon} 
-                alt={`${software.name} icon`}
-                className="w-16 h-16 md:w-20 md:h-20 object-contain"
-              />
-              <IconComponent className="absolute bottom-1 right-1 w-6 h-6 opacity-0" />
+              <IconComponent className="w-12 h-12 md:w-14 md:h-14 text-blue-400" />
             </div>
             
             <div className="flex-1">
