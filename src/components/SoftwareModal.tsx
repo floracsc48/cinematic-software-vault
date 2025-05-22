@@ -2,6 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { SoftwareItem } from './SoftwareCard';
 import { cn } from '@/lib/utils';
+import { 
+  Image, Download, Music, Video, Palette, BarChart3, Box, Edit,
+  FileText, Layers, Bot, Shield, Scissors, Film, Stamp, PenTool,
+  PaintBucket, Camera, Film as FilmIcon, Music as MusicIcon,
+  Brush, FileType, LucideIcon, Layers3, Wallpaper
+} from 'lucide-react';
 
 interface SoftwareModalProps {
   software: SoftwareItem | null;
@@ -29,6 +35,40 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
   }, [isOpen]);
   
   if (!software) return null;
+  
+  // Function to determine which icon to use based on software name
+  const getSoftwareIcon = (): LucideIcon => {
+    const name = software.name.toLowerCase();
+    
+    if (name.includes('photoshop')) return Image;
+    if (name.includes('spotify')) return Music;
+    if (name.includes('internet download')) return Download;
+    if (name.includes('fl studio')) return MusicIcon;
+    if (name.includes('davinci resolve')) return Video;
+    if (name.includes('trading bot')) return BarChart3;
+    if (name.includes('substance 3d')) return Box;
+    if (name.includes('capcut')) return Edit;
+    if (name.includes('acrobat')) return FileText;
+    if (name.includes('after effects')) return Layers;
+    if (name.includes('proton vpn')) return Shield;
+    if (name.includes('wondershare')) return Scissors;
+    if (name.includes('premiere pro')) return Film;
+    if (name.includes('topaz')) return Stamp;
+    if (name.includes('coreldraw')) return PenTool;
+    if (name.includes('illustrator')) return PaintBucket;
+    if (name.includes('lightroom')) return Camera;
+    if (name.includes('media encoder')) return FilmIcon;
+    if (name.includes('audition')) return Music;
+    if (name.includes('fresco')) return Brush;
+    if (name.includes('indesign')) return FileType;
+    if (name.includes('animate')) return Layers3;
+    if (name.includes('wallpaper')) return Wallpaper;
+    
+    // Default icon for any other software
+    return Box;
+  };
+  
+  const IconComponent = getSoftwareIcon();
   
   const password = "Creation2025";
   
@@ -59,12 +99,13 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           </button>
           
           <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50">
+            <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50 relative">
               <img 
                 src={software.icon} 
                 alt={`${software.name} icon`}
                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
               />
+              <IconComponent className="absolute bottom-1 right-1 w-6 h-6 text-blue-400/70" />
             </div>
             
             <div className="flex-1">
@@ -97,7 +138,8 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="bg-muted/30 rounded-lg p-6 mb-8 flex flex-col md:flex-row gap-6">
             <div className="flex-1">
-              <button className="neumorphic-button w-full py-3 px-6 text-center text-blue-400 hover:text-blue-300 font-medium mb-4">
+              <button className="neumorphic-button w-full py-3 px-6 text-center text-blue-400 hover:text-blue-300 font-medium mb-4 flex items-center justify-center gap-2">
+                <Download className="w-4 h-4" />
                 Download Now
               </button>
               

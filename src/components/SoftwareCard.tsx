@@ -1,6 +1,12 @@
 
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { 
+  Image, Download, Music, Video, Palette, BarChart3, Box, Edit,
+  FileText, Layers, Bot, Shield, Scissors, Film, Stamp, PenTool,
+  PaintBucket, Camera, Film as FilmIcon, Music as MusicIcon,
+  Brush, FileType, LucideIcon, Layers3, Wallpaper
+} from 'lucide-react';
 
 export interface SoftwareItem {
   id: string;
@@ -23,6 +29,40 @@ interface SoftwareCardProps {
 const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   
+  // Function to determine which icon to use based on software name
+  const getSoftwareIcon = (): LucideIcon => {
+    const name = software.name.toLowerCase();
+    
+    if (name.includes('photoshop')) return Image;
+    if (name.includes('spotify')) return Music;
+    if (name.includes('internet download')) return Download;
+    if (name.includes('fl studio')) return MusicIcon;
+    if (name.includes('davinci resolve')) return Video;
+    if (name.includes('trading bot')) return BarChart3;
+    if (name.includes('substance 3d')) return Box;
+    if (name.includes('capcut')) return Edit;
+    if (name.includes('acrobat')) return FileText;
+    if (name.includes('after effects')) return Layers;
+    if (name.includes('proton vpn')) return Shield;
+    if (name.includes('wondershare')) return Scissors;
+    if (name.includes('premiere pro')) return Film;
+    if (name.includes('topaz')) return Stamp;
+    if (name.includes('coreldraw')) return PenTool;
+    if (name.includes('illustrator')) return PaintBucket;
+    if (name.includes('lightroom')) return Camera;
+    if (name.includes('media encoder')) return FilmIcon;
+    if (name.includes('audition')) return Music;
+    if (name.includes('fresco')) return Brush;
+    if (name.includes('indesign')) return FileType;
+    if (name.includes('animate')) return Layers3;
+    if (name.includes('wallpaper')) return Wallpaper;
+    
+    // Default icon for any other software
+    return Box;
+  };
+  
+  const IconComponent = getSoftwareIcon();
+  
   return (
     <div 
       className="glass-card p-4 cursor-pointer group transition-all duration-300 animate-fade-in-up hover:-translate-y-1"
@@ -37,6 +77,8 @@ const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick }) => {
             alt={`${software.name} icon`}
             className="w-10 h-10 object-contain"
           />
+          {/* Overlay Lucide Icon for visual enhancement */}
+          <IconComponent className="absolute w-6 h-6 text-white/40" />
         </div>
         <div className="star-rating flex">
           {Array(5).fill(0).map((_, i) => (

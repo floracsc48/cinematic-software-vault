@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { MessageSquareQuote } from 'lucide-react';
 
 export interface ReviewItem {
   id: number;
@@ -16,7 +17,7 @@ interface ReviewCardProps {
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   return (
-    <div className="glass-card p-5 transition-all duration-300 animate-fade-in-up">
+    <div className="glass-card p-5 transition-all duration-300 animate-fade-in-up relative">
       <div className="flex justify-between items-center mb-3">
         <div className="flex">
           {Array(5).fill(0).map((_, i) => (
@@ -40,6 +41,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <p className="text-sm text-white/80 mb-3">{review.comment}</p>
       
       <div className="text-xs font-medium text-white/60">- {review.name}</div>
+      
+      <MessageSquareQuote className="absolute top-3 right-3 w-6 h-6 text-blue-500/10" />
     </div>
   );
 };
