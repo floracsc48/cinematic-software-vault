@@ -1,11 +1,12 @@
-
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import SoftwareCard, { SoftwareItem } from "@/components/SoftwareCard";
 import SoftwareModal from "@/components/SoftwareModal";
-import ReviewCard, { ReviewItem } from "@/components/ReviewCard";
+import { ReviewItem } from "@/components/ReviewCard";
+import ReviewsCarousel from "@/components/ReviewsCarousel";
 import InstallStep from "@/components/InstallStep";
 import Footer from "@/components/Footer";
+import { subDays } from "date-fns";
 
 // Software data
 const softwareData: SoftwareItem[] = [
@@ -451,60 +452,67 @@ const remainingSoftware: SoftwareItem[] = [
 // Combine all software
 const allSoftware = [...softwareData, ...remainingSoftware];
 
-// Reviews data
-const reviewsData: ReviewItem[] = [
-  {
-    id: 1,
-    name: "Alex M.",
-    rating: 5,
-    comment: "Incredibly reliable source for software. Everything works flawlessly and installation was simple.",
-    date: "May 15, 2025"
-  },
-  {
-    id: 2,
-    name: "Sarah K.",
-    rating: 5,
-    comment: "Adobe Photoshop working perfectly! No issues with activation and all features are available.",
-    date: "May 10, 2025"
-  },
-  {
-    id: 3,
-    name: "Michael T.",
-    rating: 4,
-    comment: "Great service overall. The DaVinci Resolve download was fast and installation was straightforward.",
-    date: "May 3, 2025"
-  },
-  {
-    id: 4,
-    name: "Jessica R.",
-    rating: 5,
-    comment: "FL Studio is running perfectly. All plugins included and working. Highly recommended!",
-    date: "April 27, 2025"
-  },
-  {
-    id: 5,
-    name: "David N.",
-    rating: 5,
-    comment: "Fantastic resource for professionals. Adobe suite works flawlessly. Will definitely return.",
-    date: "April 20, 2025"
-  },
-  {
-    id: 6,
-    name: "Emma L.",
-    rating: 4,
-    comment: "The Topaz AI suite is amazing, and everything works as expected. Just a slight delay with download.",
-    date: "April 15, 2025"
-  }
-];
+// Generate dynamic reviews with dates relative to the current day
+const generateReviewsData = (): ReviewItem[] => {
+  const today = new Date();
+  
+  const reviewsText = [
+    "Incredibly reliable source for software. Everything works flawlessly and installation was simple. Highly recommended for all professionals.",
+    "Adobe Photoshop working perfectly! No issues with activation and all features are available. The download was super fast too.",
+    "Great service overall. The DaVinci Resolve download was fast and installation was straightforward. Would definitely use again.",
+    "FL Studio is running perfectly. All plugins included and working. Highly recommended! No bugs or issues so far.",
+    "Fantastic resource for professionals. Adobe suite works flawlessly. Will definitely return for more software needs.",
+    "The Topaz AI suite is amazing, and everything works as expected. Just a slight delay with download but worth the wait.",
+    "Best version of Premiere Pro I've used. All features work perfectly and render times are much better than expected.",
+    "CapCut Pro is exactly what I needed for my YouTube channel. So many features that aren't available in the free version.",
+    "The Trading Bot software works exactly as described. Already seeing positive results after just a few days of use.",
+    "Substance 3D is incredible for my design work. All tools are functioning properly and the interface is intuitive.",
+    "Adobe Illustrator installation was quick and easy. No crashes or bugs after a week of heavy use.",
+    "IDM is a game-changer for downloads. Much faster than my previous download manager and the scheduling feature is great.",
+    "The Proton VPN premium features are excellent. Fast speeds and the secure core servers work perfectly.",
+    "Lightroom has never run better on my system. Presets work flawlessly and editing is super smooth.",
+    "CorelDRAW suite installed without any issues. All components working as expected and very stable.",
+    "After Effects is performing wonderfully. No crashes even with complex projects and rendering is optimized.",
+    "Acrobat Pro makes document management so much easier. OCR features work perfectly on all my documents.",
+    "Wondershare Filmora has excellent effects and the interface is very user-friendly. Great for beginners.",
+    "Wallpaper Engine is amazing value. The interactive wallpapers look stunning on my dual monitor setup.",
+    "Media Encoder batch processing works flawlessly. Saved me hours of work already."
+  ];
+  
+  const names = [
+    "Alex M.", "Sarah K.", "Michael T.", "Jessica R.", "David N.",
+    "Emma L.", "Thomas W.", "Olivia J.", "James D.", "Sophia H.",
+    "Benjamin F.", "Amelia S.", "William P.", "Ava G.", "Lucas B.",
+    "Mia C.", "Henry E.", "Charlotte O.", "Alexander R.", "Emily Z."
+  ];
+  
+  return reviewsText.map((comment, index) => {
+    // Create dates ranging from today to 19 days ago
+    const daysAgo = index === 0 ? 0 : Math.ceil(index * 1.5);
+    return {
+      id: index + 1,
+      name: names[index],
+      rating: Math.floor(Math.random() * 2) + 4, // Ratings between 4-5
+      comment,
+      date: subDays(today, daysAgo)
+    };
+  });
+};
 
 const Index = () => {
   const [selectedSoftware, setSelectedSoftware] = useState<SoftwareItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [reviewsData, setReviewsData] = useState<ReviewItem[]>([]);
   
   const softwareGridRef = useRef<HTMLDivElement>(null);
   const reviewsRef = useRef<HTMLDivElement>(null);
   const installStepsRef = useRef<HTMLDivElement>(null);
+  
+  // Generate reviews on component mount
+  useEffect(() => {
+    setReviewsData(generateReviewsData());
+  }, []);
   
   // Handle scroll reveal animation
   useEffect(() => {
@@ -605,10 +613,8 @@ const Index = () => {
             <p className="text-white/60 max-w-xl mx-auto">See what our users say about their experience</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
-            {reviewsData.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
+          <div className="reveal">
+            <ReviewsCarousel reviews={reviewsData} />
           </div>
         </section>
         

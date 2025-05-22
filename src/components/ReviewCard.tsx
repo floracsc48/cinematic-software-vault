@@ -2,22 +2,37 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { MessageSquareQuote } from 'lucide-react';
+import { format, formatDistanceToNow, isToday } from 'date-fns';
 
 export interface ReviewItem {
   id: number;
   name: string;
   rating: number;
   comment: string;
-  date: string;
+  date: Date;
 }
 
 interface ReviewCardProps {
   review: ReviewItem;
+  isHovered?: boolean;
 }
 
-const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+const ReviewCard: React.FC<ReviewCardProps> = ({ review, isHovered }) => {
+  // Format the date to show relative time (today, 2 days ago, etc.)
+  const formatRelativeDate = (date: Date): string => {
+    if (isToday(date)) {
+      return 'Today';
+    }
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+
   return (
-    <div className="glass-card p-5 transition-all duration-300 animate-fade-in-up relative">
+    <div 
+      className={cn(
+        "glass-card p-5 transition-all duration-300 animate-fade-in-up relative",
+        isHovered && "scale-105"
+      )}
+    >
       <div className="flex justify-between items-center mb-3">
         <div className="flex">
           {Array(5).fill(0).map((_, i) => (
@@ -35,10 +50,10 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
             </svg>
           ))}
         </div>
-        <span className="text-xs text-white/60">{review.date}</span>
+        <span className="text-xs text-white/60">{formatRelativeDate(review.date)}</span>
       </div>
       
-      <p className="text-sm text-white/80 mb-3">{review.comment}</p>
+      <p className="text-sm text-white/80 mb-3 line-clamp-2 h-10">{review.comment}</p>
       
       <div className="text-xs font-medium text-white/60">- {review.name}</div>
       
