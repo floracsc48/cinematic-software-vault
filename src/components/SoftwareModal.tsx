@@ -105,7 +105,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
                 alt={`${software.name} icon`}
                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
               />
-              <IconComponent className="absolute bottom-1 right-1 w-6 h-6 text-blue-400/70" />
+              <IconComponent className="absolute bottom-1 right-1 w-6 h-6 opacity-0" />
             </div>
             
             <div className="flex-1">

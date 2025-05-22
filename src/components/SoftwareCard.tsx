@@ -77,8 +77,7 @@ const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick }) => {
             alt={`${software.name} icon`}
             className="w-10 h-10 object-contain"
           />
-          {/* Overlay Lucide Icon for visual enhancement */}
-          <IconComponent className="absolute w-6 h-6 text-white/40" />
+          <IconComponent className="absolute w-6 h-6 opacity-0" />
         </div>
         <div className="star-rating flex">
           {Array(5).fill(0).map((_, i) => (
