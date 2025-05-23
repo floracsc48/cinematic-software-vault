@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { SoftwareItem } from './SoftwareCard';
 import { cn } from '@/lib/utils';
-import { 
-  Download, LucideIcon
-} from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useConfig } from '@/contexts/ConfigContext';
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -16,6 +14,7 @@ interface SoftwareModalProps {
 
 const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
   const { config } = useConfig();
   const { t } = useLanguage();
   
@@ -34,6 +33,15 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+  
+  const handleCopyPassword = () => {
+    navigator.clipboard.writeText(config.archive_password);
+    setCopySuccess(true);
+    
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 2000);
+  };
   
   if (!software) return null;
   
@@ -65,11 +73,12 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50 relative">
-              <img 
-                src={software.icon} 
-                alt={software.name} 
-                className="w-12 h-12 md:w-14 md:h-14" 
-              />
+              {/* Use icon instead of image */}
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
+                {/* This is a generic app icon shape */}
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M12 7v10M7 12h10" />
+              </svg>
             </div>
             
             <div className="flex-1">
@@ -116,8 +125,14 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
                     readOnly
                     className="bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white/80 flex-1"
                   />
-                  <button className="bg-blue-600/80 hover:bg-blue-600 transition-colors px-3 py-2 rounded text-sm">
-                    {t("copy")}
+                  <button 
+                    className={cn(
+                      "bg-blue-600/80 hover:bg-blue-600 transition-colors px-3 py-2 rounded text-sm",
+                      copySuccess && "bg-green-600/80"
+                    )}
+                    onClick={handleCopyPassword}
+                  >
+                    {copySuccess ? "Copied!" : t("copy")}
                   </button>
                 </div>
               </div>

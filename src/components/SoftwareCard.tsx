@@ -24,9 +24,10 @@ export interface SoftwareItem {
 interface SoftwareCardProps {
   software: SoftwareItem;
   onClick: () => void;
+  className?: string;
 }
 
-const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick }) => {
+const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick, className }) => {
   const [isHovered, setIsHovered] = useState(false);
   
   // Function to determine which icon to use based on software name
@@ -65,7 +66,7 @@ const SoftwareCard: React.FC<SoftwareCardProps> = ({ software, onClick }) => {
   
   return (
     <div 
-      className="glass-card p-4 cursor-pointer group transition-all duration-300 animate-fade-in-up hover:-translate-y-1"
+      className={cn("glass-card p-4 cursor-pointer group transition-all duration-300 hover:-translate-y-1", className)}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

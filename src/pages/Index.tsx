@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import SoftwareCard, { SoftwareItem } from "@/components/SoftwareCard";
@@ -465,9 +464,9 @@ const generateReviewsData = (): ReviewItem[] => {
     "Great service overall. The DaVinci Resolve download was fast and installation was straightforward. Would definitely use again.",
     "FL Studio is running perfectly. All plugins included and working. Highly recommended! No bugs or issues so far.",
     "Fantastic resource for professionals. Adobe suite works flawlessly. Will definitely return for more software needs.",
-    "The Topaz AI suite is amazing, and everything works as expected. Just a slight delay with download but worth the wait.",
+    "The results from Topaz AI are amazing — very impressed!",
     "Best version of Premiere Pro I've used. All features work perfectly and render times are much better than expected.",
-    "CapCut Pro is exactly what I needed for my YouTube channel. So many features that aren't available in the free version.",
+    "CapCut Pro is incredible! It works perfectly for my YouTube content.",
     "The Trading Bot software works exactly as described. Already seeing positive results after just a few days of use.",
     "Substance 3D is incredible for my design work. All tools are functioning properly and the interface is intuitive.",
     "Adobe Illustrator installation was quick and easy. No crashes or bugs after a week of heavy use.",
@@ -475,7 +474,7 @@ const generateReviewsData = (): ReviewItem[] => {
     "The Proton VPN premium features are excellent. Fast speeds and the secure core servers work perfectly.",
     "Lightroom has never run better on my system. Presets work flawlessly and editing is super smooth.",
     "CorelDRAW suite installed without any issues. All components working as expected and very stable.",
-    "After Effects is performing wonderfully. No crashes even with complex projects and rendering is optimized.",
+    "Flawless setup and performance – Adobe After Effects AI",
     "Acrobat Pro makes document management so much easier. OCR features work perfectly on all my documents.",
     "Wondershare Filmora has excellent effects and the interface is very user-friendly. Great for beginners.",
     "Wallpaper Engine is amazing value. The interactive wallpapers look stunning on my dual monitor setup.",
@@ -605,8 +604,8 @@ const Index = () => {
           </div>
           
           <div className="software-grid reveal">
-            {filteredSoftware.map((software, index) => (
-              <div key={software.id} className={`fade-in-up stagger-${(index % 5) + 1}`} style={{animationDelay: `${100 + index * 50}ms`}}>
+            {filteredSoftware.map((software) => (
+              <div key={software.id}>
                 <SoftwareCard 
                   software={software} 
                   onClick={() => handleSoftwareClick(software)}
