@@ -1,12 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import { SoftwareItem } from './SoftwareCard';
 import { cn } from '@/lib/utils';
 import { 
-  Image, Download, Music, Video, Palette, BarChart3, Box, Edit,
-  FileText, Layers, Bot, Shield, Scissors, Film, Stamp, PenTool,
-  PaintBucket, Camera, Film as FilmIcon, Music as MusicIcon,
-  Brush, FileType, LucideIcon, Layers3, Wallpaper
+  Download, LucideIcon
 } from 'lucide-react';
+import { useConfig } from '@/contexts/ConfigContext';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SoftwareModalProps {
   software: SoftwareItem | null;
@@ -16,6 +16,8 @@ interface SoftwareModalProps {
 
 const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const { config } = useConfig();
+  const { t } = useLanguage();
   
   useEffect(() => {
     if (isOpen) {
@@ -34,42 +36,6 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
   }, [isOpen]);
   
   if (!software) return null;
-  
-  // Function to determine which icon to use based on software name
-  const getSoftwareIcon = (): LucideIcon => {
-    const name = software.name.toLowerCase();
-    
-    if (name.includes('photoshop')) return Image;
-    if (name.includes('spotify')) return Music;
-    if (name.includes('internet download')) return Download;
-    if (name.includes('fl studio')) return MusicIcon;
-    if (name.includes('davinci resolve')) return Video;
-    if (name.includes('trading bot')) return BarChart3;
-    if (name.includes('substance 3d')) return Box;
-    if (name.includes('capcut')) return Edit;
-    if (name.includes('acrobat')) return FileText;
-    if (name.includes('after effects')) return Layers;
-    if (name.includes('proton vpn')) return Shield;
-    if (name.includes('wondershare')) return Scissors;
-    if (name.includes('premiere pro')) return Film;
-    if (name.includes('topaz')) return Stamp;
-    if (name.includes('coreldraw')) return PenTool;
-    if (name.includes('illustrator')) return PaintBucket;
-    if (name.includes('lightroom')) return Camera;
-    if (name.includes('media encoder')) return FilmIcon;
-    if (name.includes('audition')) return Music;
-    if (name.includes('fresco')) return Brush;
-    if (name.includes('indesign')) return FileType;
-    if (name.includes('animate')) return Layers3;
-    if (name.includes('wallpaper')) return Wallpaper;
-    
-    // Default icon for any other software
-    return Box;
-  };
-  
-  const IconComponent = getSoftwareIcon();
-  
-  const password = "Creation2025";
   
   return (
     <div className={cn(
@@ -99,7 +65,11 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50 relative">
-              <IconComponent className="w-12 h-12 md:w-14 md:h-14 text-blue-400" />
+              <img 
+                src={software.icon} 
+                alt={software.name} 
+                className="w-12 h-12 md:w-14 md:h-14" 
+              />
             </div>
             
             <div className="flex-1">
@@ -132,29 +102,29 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="bg-muted/30 rounded-lg p-6 mb-8 flex flex-col md:flex-row gap-6">
             <div className="flex-1">
-              <button className="neumorphic-button w-full py-3 px-6 text-center text-blue-400 hover:text-blue-300 font-medium mb-4 flex items-center justify-center gap-2">
+              <a href={config.download_url} className="neumorphic-button w-full py-3 px-6 text-center text-blue-400 hover:text-blue-300 font-medium mb-4 flex items-center justify-center gap-2">
                 <Download className="w-4 h-4" />
-                Download Now
-              </button>
+                {t("downloadNow")}
+              </a>
               
               <div className="bg-black/30 border border-white/5 rounded-lg p-4 mb-4">
-                <h4 className="text-sm font-medium mb-2">Password for Archive:</h4>
+                <h4 className="text-sm font-medium mb-2">{t("passwordForArchive")}:</h4>
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
-                    value={password}
+                    value={config.archive_password}
                     readOnly
                     className="bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white/80 flex-1"
                   />
                   <button className="bg-blue-600/80 hover:bg-blue-600 transition-colors px-3 py-2 rounded text-sm">
-                    Copy
+                    {t("copy")}
                   </button>
                 </div>
               </div>
             </div>
             
             <div className="flex-1">
-              <h4 className="text-lg font-light mb-3">How to Install</h4>
+              <h4 className="text-lg font-light mb-3">{t("howToInstall")}</h4>
               <ol className="space-y-3 list-decimal list-inside text-sm text-white/80">
                 {software.installSteps.map((step, index) => (
                   <li key={index}>
@@ -167,7 +137,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-xl font-light mb-4 gradient-text">Features</h3>
+              <h3 className="text-xl font-light mb-4 gradient-text">{t("features")}</h3>
               <ul className="space-y-3 text-sm text-white/70">
                 {software.features.map((feature, index) => (
                   <li key={index} className="flex items-start gap-2">
@@ -181,7 +151,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
             </div>
             
             <div>
-              <h3 className="text-xl font-light mb-4 gradient-text">System Requirements</h3>
+              <h3 className="text-xl font-light mb-4 gradient-text">{t("systemRequirements")}</h3>
               <ul className="space-y-3 text-sm text-white/70">
                 {software.systemRequirements.map((requirement, index) => (
                   <li key={index} className="flex items-start gap-2">

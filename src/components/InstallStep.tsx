@@ -7,9 +7,10 @@ interface InstallStepProps {
   title: string;
   description: string;
   delay?: number;
+  className?: string;
 }
 
-const InstallStep: React.FC<InstallStepProps> = ({ number, title, description, delay = 0 }) => {
+const InstallStep: React.FC<InstallStepProps> = ({ number, title, description, delay = 0, className = '' }) => {
   // Choose icon based on step number
   const getStepIcon = () => {
     switch(number) {
@@ -23,7 +24,7 @@ const InstallStep: React.FC<InstallStepProps> = ({ number, title, description, d
 
   return (
     <div 
-      className="bg-glass-gradient backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-glass-sm relative reveal"
+      className={`bg-glass-gradient backdrop-blur-sm border border-white/10 p-6 rounded-xl shadow-glass-sm relative reveal ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       <div className="bg-blue-500/20 w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -left-3">

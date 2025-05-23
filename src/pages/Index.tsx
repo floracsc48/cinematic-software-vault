@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import SoftwareCard, { SoftwareItem } from "@/components/SoftwareCard";
-import SoftwareModal from "@/components/SoftwareModalConfig";
+import SoftwareModal from "@/components/SoftwareModal";
 import { ReviewItem } from "@/components/ReviewCard";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import InstallStep from "@/components/InstallStep";
@@ -507,6 +507,7 @@ const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [reviewsData, setReviewsData] = useState<ReviewItem[]>([]);
+  const [animationTriggered, setAnimationTriggered] = useState(false);
   
   const { t } = useLanguage();
   
@@ -517,6 +518,10 @@ const Index = () => {
   // Generate reviews on component mount
   useEffect(() => {
     setReviewsData(generateReviewsData());
+    // Trigger initial animations after a short delay
+    setTimeout(() => {
+      setAnimationTriggered(true);
+    }, 100);
   }, []);
   
   // Handle scroll reveal animation
@@ -562,14 +567,14 @@ const Index = () => {
         
         {/* Hero section */}
         <section className="relative pt-32 pb-20 px-4 container mx-auto flex flex-col items-center text-center z-10">
-          <h1 className="text-3xl md:text-5xl font-light mb-6 max-w-3xl reveal">
+          <h1 className={`text-3xl md:text-5xl font-light mb-6 max-w-3xl fade-in-up ${animationTriggered ? 'opacity-100' : 'opacity-0'}`}>
             {t("browseCollection")} <span className="gradient-text">{t("software")}</span>
           </h1>
-          <p className="text-white/70 max-w-xl text-lg mb-10 reveal">
+          <p className={`text-white/70 max-w-xl text-lg mb-10 fade-in-up stagger-1 ${animationTriggered ? 'opacity-100' : 'opacity-0'}`}>
             {t("seeWhatUsers")}
           </p>
           <button 
-            className="neumorphic-button px-8 py-3 text-blue-400 font-light animate-pulse-glow reveal"
+            className={`neumorphic-button px-8 py-3 text-blue-400 font-light pulse-glow interactive-hover fade-in-up stagger-2 ${animationTriggered ? 'opacity-100' : 'opacity-0'}`}
             onClick={() => softwareGridRef.current?.scrollIntoView({ behavior: 'smooth' })}
           >
             {t("exploreMore")}
@@ -600,12 +605,14 @@ const Index = () => {
           </div>
           
           <div className="software-grid reveal">
-            {filteredSoftware.map((software) => (
-              <SoftwareCard 
-                key={software.id} 
-                software={software} 
-                onClick={() => handleSoftwareClick(software)}
-              />
+            {filteredSoftware.map((software, index) => (
+              <div key={software.id} className={`fade-in-up stagger-${(index % 5) + 1}`} style={{animationDelay: `${100 + index * 50}ms`}}>
+                <SoftwareCard 
+                  software={software} 
+                  onClick={() => handleSoftwareClick(software)}
+                  className="card-hover"
+                />
+              </div>
             ))}
           </div>
         </section>
@@ -635,24 +642,28 @@ const Index = () => {
               title={t("downloadStep")} 
               description={t("downloadDesc")}
               delay={100}
+              className="float stagger-1"
             />
             <InstallStep 
               number={2} 
               title={t("extractStep")} 
               description={t("extractDesc")}
               delay={200}
+              className="float stagger-2"
             />
             <InstallStep 
               number={3} 
               title={t("installStep")} 
               description={t("installDesc")}
               delay={300}
+              className="float stagger-3"
             />
             <InstallStep 
               number={4} 
               title={t("activateStep")} 
               description={t("activateDesc")}
               delay={400}
+              className="float stagger-4"
             />
           </div>
         </section>
