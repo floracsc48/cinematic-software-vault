@@ -1,10 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import LanguageSelector from "./LanguageSelector";
+import { useConfig } from "@/contexts/ConfigContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { config } = useConfig();
+  const { t } = useLanguage();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -37,17 +42,17 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-4">
         <div className="flex items-center">
           <span className="text-xl sm:text-2xl font-light tracking-tighter gradient-text">
-            CREATIONSOFT
+            {config.site_name}
           </span>
         </div>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           {[
-            { id: "home", label: "Home" },
-            { id: "software", label: "Software" },
-            { id: "reviews", label: "Reviews" },
-            { id: "how-to-install", label: "How to Install" }
+            { id: "home", label: t("home") },
+            { id: "software", label: t("software") },
+            { id: "reviews", label: t("reviews") },
+            { id: "how-to-install", label: t("howToInstall") }
           ].map((item) => (
             <button 
               key={item.id}
@@ -58,6 +63,11 @@ const Navbar = () => {
             </button>
           ))}
         </nav>
+        
+        {/* Language Selector */}
+        <div className="hidden md:flex">
+          <LanguageSelector />
+        </div>
         
         {/* Mobile Burger */}
         <button
@@ -87,7 +97,7 @@ const Navbar = () => {
       )}>
         <div className="flex flex-col p-8 space-y-6">
           <div className="flex justify-between items-center mb-8">
-            <span className="gradient-text text-lg font-light">CREATIONSOFT</span>
+            <span className="gradient-text text-lg font-light">{config.site_name}</span>
             <button
               onClick={() => setIsMenuOpen(false)}
               className="p-2"
@@ -100,10 +110,10 @@ const Navbar = () => {
             </button>
           </div>
           {[
-            { id: "home", label: "Home" },
-            { id: "software", label: "Software" },
-            { id: "reviews", label: "Reviews" },
-            { id: "how-to-install", label: "How to Install" }
+            { id: "home", label: t("home") },
+            { id: "software", label: t("software") },
+            { id: "reviews", label: t("reviews") },
+            { id: "how-to-install", label: t("howToInstall") }
           ].map((item) => (
             <button 
               key={item.id}
@@ -113,6 +123,10 @@ const Navbar = () => {
               {item.label}
             </button>
           ))}
+          
+          <div className="mt-4">
+            <LanguageSelector />
+          </div>
         </div>
       </div>
       

@@ -1,11 +1,14 @@
+
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import SoftwareCard, { SoftwareItem } from "@/components/SoftwareCard";
-import SoftwareModal from "@/components/SoftwareModal";
+import SoftwareModal from "@/components/SoftwareModalConfig";
 import { ReviewItem } from "@/components/ReviewCard";
 import ReviewsCarousel from "@/components/ReviewsCarousel";
 import InstallStep from "@/components/InstallStep";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useConfig } from "@/contexts/ConfigContext";
 import { subDays } from "date-fns";
 
 // Software data
@@ -505,6 +508,8 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [reviewsData, setReviewsData] = useState<ReviewItem[]>([]);
   
+  const { t } = useLanguage();
+  
   const softwareGridRef = useRef<HTMLDivElement>(null);
   const reviewsRef = useRef<HTMLDivElement>(null);
   const installStepsRef = useRef<HTMLDivElement>(null);
@@ -558,17 +563,16 @@ const Index = () => {
         {/* Hero section */}
         <section className="relative pt-32 pb-20 px-4 container mx-auto flex flex-col items-center text-center z-10">
           <h1 className="text-3xl md:text-5xl font-light mb-6 max-w-3xl reveal">
-            Premium Software Solutions for
-            <span className="gradient-text"> Professionals</span>
+            {t("browseCollection")} <span className="gradient-text">{t("software")}</span>
           </h1>
           <p className="text-white/70 max-w-xl text-lg mb-10 reveal">
-            Access the most advanced creative and productivity tools with our curated collection of premium software solutions.
+            {t("seeWhatUsers")}
           </p>
           <button 
             className="neumorphic-button px-8 py-3 text-blue-400 font-light animate-pulse-glow reveal"
             onClick={() => softwareGridRef.current?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Explore Catalog
+            {t("exploreMore")}
           </button>
         </section>
         
@@ -576,14 +580,14 @@ const Index = () => {
         <section id="software" ref={softwareGridRef} className="py-16 px-4 container mx-auto relative z-10">
           <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between reveal">
             <div>
-              <h2 className="text-2xl md:text-3xl font-light mb-2">Software Catalog</h2>
-              <p className="text-white/60">Browse our collection of premium tools</p>
+              <h2 className="text-2xl md:text-3xl font-light mb-2">{t("softwareCatalog")}</h2>
+              <p className="text-white/60">{t("browseCollection")}</p>
             </div>
             <div className="mt-4 md:mt-0 max-w-md w-full">
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search software..."
+                  placeholder={t("searchSoftware")}
                   className="w-full bg-muted/30 border border-white/10 rounded-lg py-2 px-4 pl-10 text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -609,8 +613,8 @@ const Index = () => {
         {/* Reviews Section */}
         <section id="reviews" ref={reviewsRef} className="py-16 px-4 container mx-auto bg-glow-radial bg-fixed bg-no-repeat bg-center relative z-10">
           <div className="text-center mb-12 reveal">
-            <h2 className="text-2xl md:text-3xl font-light mb-2">User Reviews</h2>
-            <p className="text-white/60 max-w-xl mx-auto">See what our users say about their experience</p>
+            <h2 className="text-2xl md:text-3xl font-light mb-2">{t("userReviews")}</h2>
+            <p className="text-white/60 max-w-xl mx-auto">{t("seeWhatUsers")}</p>
           </div>
           
           <div className="reveal">
@@ -621,33 +625,33 @@ const Index = () => {
         {/* How to Install Section */}
         <section id="how-to-install" ref={installStepsRef} className="py-16 px-4 container mx-auto relative z-10">
           <div className="text-center mb-12 reveal">
-            <h2 className="text-2xl md:text-3xl font-light mb-2">How to Install</h2>
-            <p className="text-white/60 max-w-xl mx-auto">Follow these simple steps to get started with your software</p>
+            <h2 className="text-2xl md:text-3xl font-light mb-2">{t("howToInstallSection")}</h2>
+            <p className="text-white/60 max-w-xl mx-auto">{t("followSteps")}</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
             <InstallStep 
               number={1} 
-              title="Download" 
-              description="Download your desired software package from our catalog."
+              title={t("downloadStep")} 
+              description={t("downloadDesc")}
               delay={100}
             />
             <InstallStep 
               number={2} 
-              title="Extract Files" 
-              description="Extract the archive using the provided password."
+              title={t("extractStep")} 
+              description={t("extractDesc")}
               delay={200}
             />
             <InstallStep 
               number={3} 
-              title="Install" 
-              description="Run the installation file and follow the setup wizard."
+              title={t("installStep")} 
+              description={t("installDesc")}
               delay={300}
             />
             <InstallStep 
               number={4} 
-              title="Activate" 
-              description="Apply the included patch or keygen to activate the software."
+              title={t("activateStep")} 
+              description={t("activateDesc")}
               delay={400}
             />
           </div>

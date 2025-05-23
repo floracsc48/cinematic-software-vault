@@ -25,8 +25,6 @@ const ReviewsCarousel: React.FC<ReviewsCarouselProps> = ({ reviews }) => {
         loop: true,
         dragFree: true,
         containScroll: "trimSnaps",
-        // Slow down carousel when hovered
-        speed: isCarouselHovered ? 20 : 10
       }}
       className="w-full"
       onMouseEnter={() => setIsCarouselHovered(true)}

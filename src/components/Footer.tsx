@@ -1,7 +1,12 @@
 
 import React from 'react';
+import { useConfig } from '@/contexts/ConfigContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
+  const { config } = useConfig();
+  const { t } = useLanguage();
+  
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -15,19 +20,19 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <h2 className="text-2xl font-light tracking-tight gradient-text mb-2">
-              CREATIONSOFT
+              {config.site_name}
             </h2>
             <p className="text-sm text-white/50 max-w-xs">
-              The ultimate destination for premium software solutions.
+              {t("browseCollection")}
             </p>
           </div>
           
           <div className="flex flex-col md:flex-row gap-6 md:gap-12">
             {[
-              { id: "home", label: "Home" },
-              { id: "software", label: "Software" },
-              { id: "reviews", label: "Reviews" },
-              { id: "how-to-install", label: "How to Install" }
+              { id: "home", label: t("home") },
+              { id: "software", label: t("software") },
+              { id: "reviews", label: t("reviews") },
+              { id: "how-to-install", label: t("howToInstall") }
             ].map((item) => (
               <button 
                 key={item.id}
@@ -42,7 +47,7 @@ const Footer = () => {
         
         <div className="border-t border-white/5 mt-8 pt-6 text-center">
           <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} CREATIONSOFT. All rights reserved.
+            © {new Date().getFullYear()} {config.site_name}. {t("copyrightRights")}
           </p>
         </div>
       </div>
