@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Define language identifiers
@@ -18,7 +17,8 @@ const translations = {
     downloadNow: "Download Now",
     exploreMore: "Discover Tools",
     softwareCatalog: "Software Catalog",
-    browseCollection: "Browse our collection of premium software tools",
+    browseCollection: "Browse our collection of premium",
+    softwareTools: "software tools",
     searchSoftware: "Search software...",
     userReviews: "User Reviews",
     seeWhatUsers: "See what our users say about their experience with our tools",
@@ -52,7 +52,8 @@ const translations = {
     downloadNow: "Descargar Ahora",
     exploreMore: "Descubrir Herramientas",
     softwareCatalog: "Catálogo de Software",
-    browseCollection: "Explora nuestra colección de herramientas de software premium",
+    browseCollection: "Explora nuestra colección de",
+    softwareTools: "herramientas de software premium",
     searchSoftware: "Buscar software...",
     userReviews: "Reseñas de Usuarios",
     seeWhatUsers: "Mira lo que nuestros usuarios dicen sobre su experiencia con nuestras herramientas",
@@ -86,7 +87,8 @@ const translations = {
     downloadNow: "अभी डाउनलोड करें",
     exploreMore: "टूल्स खोजें",
     softwareCatalog: "सॉफ्टवेयर कैटलॉग",
-    browseCollection: "हमारे प्रीमियम सॉफ्टवेयर टूल्स का संग्रह देखें",
+    browseCollection: "हमारे प्रीमियम",
+    softwareTools: "सॉफ्टवेयर टूल्स का संग्रह देखें",
     searchSoftware: "सॉफ्टवेयर खोजें...",
     userReviews: "उपयोगकर्ता समीक्षाएँ",
     seeWhatUsers: "देखें कि हमारे उपयोगकर्ता हमारे टूल्स के साथ अपने अनुभव के बारे में क्या कहते हैं",

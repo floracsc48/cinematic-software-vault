@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from "react";
 import Navbar from "@/components/Navbar";
 import SoftwareCard, { SoftwareItem } from "@/components/SoftwareCard";
@@ -567,7 +568,7 @@ const Index = () => {
         {/* Hero section */}
         <section className="relative pt-32 pb-20 px-4 container mx-auto flex flex-col items-center text-center z-10">
           <h1 className={`text-3xl md:text-5xl font-light mb-6 max-w-3xl fade-in-up ${animationTriggered ? 'opacity-100' : 'opacity-0'}`}>
-            {t("browseCollection")} <span className="gradient-text">{t("software")}</span>
+            {t("browseCollection")} <span className="gradient-text">{t("softwareTools")}</span>
           </h1>
           <p className={`text-white/70 max-w-xl text-lg mb-10 fade-in-up stagger-1 ${animationTriggered ? 'opacity-100' : 'opacity-0'}`}>
             {t("seeWhatUsers")}
@@ -585,7 +586,7 @@ const Index = () => {
           <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between reveal">
             <div>
               <h2 className="text-2xl md:text-3xl font-light mb-2">{t("softwareCatalog")}</h2>
-              <p className="text-white/60">{t("browseCollection")}</p>
+              <p className="text-white/60">{t("browseCollection")} <span className="gradient-text">{t("softwareTools")}</span></p>
             </div>
             <div className="mt-4 md:mt-0 max-w-md w-full">
               <div className="relative">

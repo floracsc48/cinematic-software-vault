@@ -5,6 +5,12 @@ import { cn } from '@/lib/utils';
 import { Download } from 'lucide-react';
 import { useConfig } from '@/contexts/ConfigContext';
 import { useLanguage } from "@/contexts/LanguageContext";
+import { 
+  Image, Music, Video, Palette, BarChart3, Box, Edit,
+  FileText, Layers, Bot, Shield, Scissors, Film, Stamp, PenTool,
+  PaintBucket, Camera, Film as FilmIcon, Music as MusicIcon,
+  Brush, FileType, LucideIcon, Layers3, Wallpaper
+} from 'lucide-react';
 
 interface SoftwareModalProps {
   software: SoftwareItem | null;
@@ -17,6 +23,38 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
   const [copySuccess, setCopySuccess] = useState(false);
   const { config } = useConfig();
   const { t } = useLanguage();
+  
+  // Function to determine which icon to use based on software name (same as SoftwareCard)
+  const getSoftwareIcon = (softwareName: string): LucideIcon => {
+    const name = softwareName.toLowerCase();
+    
+    if (name.includes('photoshop')) return Image;
+    if (name.includes('spotify')) return Music;
+    if (name.includes('internet download')) return Download;
+    if (name.includes('fl studio')) return MusicIcon;
+    if (name.includes('davinci resolve')) return Video;
+    if (name.includes('trading bot')) return BarChart3;
+    if (name.includes('substance 3d')) return Box;
+    if (name.includes('capcut')) return Edit;
+    if (name.includes('acrobat')) return FileText;
+    if (name.includes('after effects')) return Layers;
+    if (name.includes('proton vpn')) return Shield;
+    if (name.includes('wondershare')) return Scissors;
+    if (name.includes('premiere pro')) return Film;
+    if (name.includes('topaz')) return Stamp;
+    if (name.includes('coreldraw')) return PenTool;
+    if (name.includes('illustrator')) return PaintBucket;
+    if (name.includes('lightroom')) return Camera;
+    if (name.includes('media encoder')) return FilmIcon;
+    if (name.includes('audition')) return Music;
+    if (name.includes('fresco')) return Brush;
+    if (name.includes('indesign')) return FileType;
+    if (name.includes('animate')) return Layers3;
+    if (name.includes('wallpaper')) return Wallpaper;
+    
+    // Default icon for any other software
+    return Box;
+  };
   
   useEffect(() => {
     if (isOpen) {
@@ -44,6 +82,8 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
   };
   
   if (!software) return null;
+  
+  const IconComponent = getSoftwareIcon(software.name);
   
   return (
     <div className={cn(
@@ -73,12 +113,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
           
           <div className="flex flex-col md:flex-row gap-6 items-start mb-8">
             <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl flex items-center justify-center bg-muted/50 relative">
-              {/* Use icon instead of image */}
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
-                {/* This is a generic app icon shape */}
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M12 7v10M7 12h10" />
-              </svg>
+              <IconComponent className="w-12 h-12 text-blue-400" />
             </div>
             
             <div className="flex-1">
@@ -132,7 +167,7 @@ const SoftwareModal: React.FC<SoftwareModalProps> = ({ software, isOpen, onClose
                     )}
                     onClick={handleCopyPassword}
                   >
-                    {copySuccess ? "Copied!" : t("copy")}
+                    {copySuccess ? "Copied!" : "Copy"}
                   </button>
                 </div>
               </div>
